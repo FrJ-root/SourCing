@@ -120,51 +120,67 @@
     <div class="container mx-auto px-4 py-8">
 
         <form method="POST" action="{{ route('register') }}" class="max-w-md mx-auto bg-black p-6 rounded-md shadow-md">
-            @csrf
-
-            <div class="mb-4">
-                <x-input-label for="name" :value="__('Name')" class="block text-white text-sm font-bold mb-2" />
-                <x-text-input id="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-                <x-input-error :messages="$errors->get('name')" class="mt-2 text-red-500 text-xs italic" />
-            </div>
-
-            <div class="mb-4">
-                <x-input-label for="email" :value="__('Email')" class="block text-white text-sm font-bold mb-2" />
-                <x-text-input id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" name="email" :value="old('email')" required autocomplete="username" />
-                <x-input-error :messages="$errors->get('email')" class="mt-2 text-red-500 text-xs italic" />
-            </div>
-
-            <div class="mb-4">
-                <x-input-label for="password" :value="__('Password')" class="block text-white text-sm font-bold mb-2" />
-
-                <x-text-input id="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-
-                <x-input-error :messages="$errors->get('password')" class="mt-2 text-red-500 text-xs italic" />
-            </div>
-
-            <div class="mb-6">
-                <x-input-label for="password_confirmation" :value="__('Confirm Password')" class="block text-white text-sm font-bold mb-2" />
-
-                <x-text-input id="password_confirmation" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-
-                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-red-500 text-xs italic" />
-            </div>
-
-            <div class="flex items-center justify-between">
-                <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="{{ route('login') }}">
-                    {{ __('Register') }}
-                </a>
-            </div>
+        @csrf
+    
+        <div class="mb-4">
+            <x-input-label for="name" :value="__('Name')" class="block text-white text-sm font-bold mb-2" />
+            <x-text-input id="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('name')" class="mt-2 text-red-500 text-xs italic" />
+        </div>
+    
+        <div class="mb-4">
+            <x-input-label for="email" :value="__('Email')" class="block text-white text-sm font-bold mb-2" />
+            <x-text-input id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2 text-red-500 text-xs italic" />
+        </div>
+    
+        <div class="mb-4">
+            <x-input-label for="password" :value="__('Password')" class="block text-white text-sm font-bold mb-2" />
+            <x-text-input id="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" required autocomplete="new-password" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2 text-red-500 text-xs italic" />
+        </div>
+    
+        <div class="mb-6">
+            <x-input-label for="password_confirmation" :value="__('Confirm Password')" class="block text-white text-sm font-bold mb-2" />
+            <x-text-input id="password_confirmation" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password_confirmation" required autocomplete="new-password" />
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-red-500 text-xs italic" />
+        </div>
+    
+        <!-- New Section for Options and ID Card Upload -->
+        <div class="mb-4">
+            <x-input-label for="option" :value="__('Choose an Option')" class="block text-white text-sm font-bold mb-2" />
+            <select id="option" name="option" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <option value="deve_web">Deve Web</option>
+                <option value="data">Data</option>
+            </select>
+        </div>
+    
+        <div class="mb-4">
+            <x-input-label for="id_card" :value="__('Upload or Scan ID Card')" class="block text-white text-sm font-bold mb-2" />
+            <input type="file" id="id_card" name="id_card" accept="image/*" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required />
+        </div>
+    
+        <!-- Replace the existing form button with this -->
+        <div class="flex items-center justify-end">
+            <button type="button" onclick="showQuizzes()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                Next
+            </button>
+        </div>
         </form>
+        
+        <!-- Update the quizzes section -->
+        <div id="quizzes-section" class="hidden max-w-4xl mx-auto mt-8">
+            <h2 class="text-white text-2xl font-bold mb-6">Available Quizzes</h2>
+            <div id="quizzes-content" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Quizzes will be loaded here -->
+            </div>
+        </div>
+
+    </div>
+
+    <div id="quizzes-section" class="hidden">
+        <h2 class="text-white text-lg font-bold mb-4">Quizzes</h2>
+        <div id="quizzes-content"></div>
     </div>
 
     <footer class="bg-black text-white py-8">
@@ -204,6 +220,7 @@
     </footer>
 
     <script>
+
         function createCodeLine() {
             const codeLine = document.createElement('div');
             codeLine.classList.add('code-line');
@@ -221,6 +238,49 @@
             });
         }
         setInterval(createCodeLine, 100);
+
+        function showQuizzes() {
+            // Hide the registration form
+            document.querySelector('form').classList.add('hidden');
+            
+            // Show the quizzes section
+            const quizzesSection = document.getElementById('quizzes-section');
+            quizzesSection.classList.remove('hidden');
+            
+            // Fetch quizzes from the API
+            fetch('/admin/quizzes')
+                .then(response => response.json())
+                .then(quizzes => {
+                    const quizzesContent = document.getElementById('quizzes-content');
+                    quizzesContent.innerHTML = quizzes.map(quiz => `
+                        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                            <h3 class="text-xl font-semibold mb-2">${quiz.title}</h3>
+                            <p class="text-gray-400 mb-4">${quiz.description}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">${quiz.total_questions} questions</span>
+                                <button onclick="startQuiz(${quiz.id})" 
+                                        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                                    Start Quiz
+                                </button>
+                            </div>
+                        </div>
+                    `).join('');
+                })
+                .catch(error => {
+                    console.error('Error loading quizzes:', error);
+                    document.getElementById('quizzes-content').innerHTML = `
+                        <div class="text-red-500">
+                            Error loading quizzes. Please try again later.
+                        </div>
+                    `;
+                });
+        }
+        
+        function startQuiz(quizId) {
+            // Handle starting the quiz
+            window.location.href = `/quizzes/${quizId}/start`;
+        }
+
     </script>
 
 </body>
